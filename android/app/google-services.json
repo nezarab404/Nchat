@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "988796388260",
+    "project_id": "connect-withme",
+    "storage_bucket": "connect-withme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988796388260:android:3bae01b0353eb9301a3731",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988796388260-au520ffk57sebqefv64fjpcgeuis7ghe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUj4x17QGkZf3HUEYScWdLA733t4ONlAQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988796388260-au520ffk57sebqefv64fjpcgeuis7ghe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

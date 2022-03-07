@@ -14,10 +14,8 @@ class HomeGetUserErrorState extends HomeStates {
 
 class HomeChangeBottomNavState extends HomeStates {}
 
-class ProfileImagePickedSuccessState extends HomeStates {}
+class HomeGetAllUsersLoadingState extends HomeStates {}
 
-class ProfileImagePickedErrorState extends HomeStates {}
+class HomeGetAllUsersSuccessState extends HomeStates {}
 
-class ProfileImageUploadedSccessState extends HomeStates {}
-
-class ProfileImageUploadedErrorState extends HomeStates {}
+class HomeGetAllUsersErrorState extends HomeStates {}

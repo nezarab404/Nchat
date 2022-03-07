@@ -32,6 +32,7 @@ class UserModel {
       'email': email,
       'name': name,
       'phone': phone,
+      'uId' : uId,
       'isEmailVerified': isEmailVerified,
       'bio': bio,
       'profileImage': profileImage

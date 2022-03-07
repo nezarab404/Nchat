@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/models/user_model.dart';
+import 'package:flutter_application_1/shared/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -24,6 +25,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
           .then((value) {
         // emit(RegisterSuccessState());
         print('${value.user!.email}');
+        uId = value.user!.uid;
         createUser(
             email: email,
             username: username,

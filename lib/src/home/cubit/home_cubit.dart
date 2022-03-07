@@ -15,6 +15,7 @@ class HomeCubit extends Cubit<HomeStates> {
   static HomeCubit get(context) => BlocProvider.of(context);
 
   UserModel? user;
+  List<UserModel> usersList = [];
   File? pickedImage;
   String? imageURL;
   void getUser() {
@@ -25,7 +26,7 @@ class HomeCubit extends Cubit<HomeStates> {
             .get()
             .then((value) {
           print(value.data());
-          user = UserModel.fromJson(value.data()!);
+          user = userModel = UserModel.fromJson(value.data()!);
           emit(HomeGetUserSuccessState());
         }).catchError((error) {
           emit(HomeGetUserErrorState(error.toString().split(']').last));
@@ -40,36 +41,55 @@ class HomeCubit extends Cubit<HomeStates> {
         .update({'isEmailVerified': i});
   }
 
-  Future pickImage() async {
-    await ImagePicker().pickImage(source: ImageSource.gallery).then((image) {
-      if (image == null) return;
-      pickedImage = File(image.path);
-      emit(ProfileImagePickedSuccessState());
-    }).catchError((error) {
-      emit(ProfileImagePickedErrorState());
-    });
-  }
+  // Future pickImage() async {
+  //   await ImagePicker().pickImage(source: ImageSource.gallery).then((image) {
+  //     if (image == null) return;
+  //     pickedImage = File(image.path);
+  //     emit(ProfileImagePickedSuccessState());
+  //   }).catchError((error) {
+  //     emit(ProfileImagePickedErrorState());
+  //   });
+  // }
 
-  void uploadImage() {
-    String imageName = pickedImage!.path.split('/').last;
-    firebase_storage.FirebaseStorage.instance
-        .ref()
-        .child('users/$imageName')
-        .putFile(pickedImage!)
-        .then((value) {
-      value.ref.getDownloadURL().then((value) {
-        imageURL = value;
-        FirebaseFirestore.instance
-            .collection('users')
-            .doc(uId)
-            .update({'profileImage': value}).then((value) {
-          print("sssssssssssssssssssss");
-        });
+  // void uploadImage() {
+  //   String imageName = pickedImage!.path.split('/').last;
+  //   firebase_storage.FirebaseStorage.instance
+  //       .ref()
+  //       .child('users/$imageName')
+  //       .putFile(pickedImage!)
+  //       .then((value) {
+  //     value.ref.getDownloadURL().then((value) {
+  //       imageURL = value;
+  //       FirebaseFirestore.instance
+  //           .collection('users')
+  //           .doc(uId)
+  //           .update({'profileImage': value}).then((value) {
+  //         print("sssssssssssssssssssss");
+  //       });
+  //     });
+
+  //     emit(ProfileImageUploadedSccessState());
+  //   }).catchError((error) {
+  //     emit(ProfileImageUploadedErrorState());
+  //   });
+  // }
+
+  void getAllUsers() {
+    emit(HomeGetAllUsersLoadingState());
+    usersList = [];
+
+    FirebaseFirestore.instance.collection('users').get().then((value) {
+      // ignore: avoid_function_literals_in_foreach_calls
+      value.docs.forEach((element) {
+        print(element.data());
+        if (element.data()['email'] != user!.email!) {
+          usersList.add(UserModel.fromJson(element.data()));
+        }
       });
-
-      emit(ProfileImageUploadedSccessState());
+      emit(HomeGetAllUsersSuccessState());
     }).catchError((error) {
-      emit(ProfileImageUploadedErrorState());
+      print(error.toString());
+      emit(HomeGetAllUsersErrorState());
     });
   }
 }

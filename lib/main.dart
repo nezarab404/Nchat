@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/shared/constants.dart';
 import 'package:flutter_application_1/shared/my_observer.dart';
 import 'package:flutter_application_1/shared/storage/shared_helper.dart';
+import 'package:flutter_application_1/src/chat/cubit/chat_cubit.dart';
 import 'package:flutter_application_1/src/home/home_screen.dart';
+import 'package:flutter_application_1/src/profile/cubit/profile_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -11,7 +13,7 @@ import 'package:flutter_application_1/src/login/login_screen.dart';
 import 'package:flutter_application_1/src/home/cubit/home_cubit.dart';
 import 'package:flutter_application_1/src/register/cubit/register_cubit.dart';
 
-void main()  {
+void main() {
   BlocOverrides.runZoned(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
@@ -25,14 +27,15 @@ void main()  {
       widget = LoginScreen();
     }
 
-    runApp(MyApp(startWidget: widget,));
+    runApp(MyApp(
+      startWidget: widget,
+    ));
   }, blocObserver: MyBlocObserver());
 }
 
-
 // ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  MyApp( {required this.startWidget,Key? key}) : super(key: key);
+  MyApp({required this.startWidget, Key? key}) : super(key: key);
   Widget startWidget;
   // This widget is the root of your application.
   @override
@@ -41,7 +44,13 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
         BlocProvider<RegisterCubit>(create: (context) => RegisterCubit()),
-        BlocProvider<HomeCubit>(create: (context) => HomeCubit()..getUser()),
+        BlocProvider<HomeCubit>(
+            create: (context) => HomeCubit()
+              ..getUser()
+              ),
+        BlocProvider<ProfileCubit>(
+            create: (context) => ProfileCubit()..getUser()),
+            BlocProvider<ChatCubit>(create:(_)=>ChatCubit() )
       ],
       child: MaterialApp(
         title: 'Chaty',

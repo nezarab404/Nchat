@@ -73,10 +73,10 @@ class LoginScreen extends StatelessWidget {
                           validator: (val) => Validator.passwordValidator(val),
                         ),
                         state is LoginLoadingState
-                            ?const Padding(
-                              padding:  EdgeInsets.only(top:10),
-                              child:  CircularProgressIndicator(),
-                            )
+                            ? const Padding(
+                                padding: EdgeInsets.only(top: 10),
+                                child: CircularProgressIndicator(),
+                              )
                             : Container(
                                 padding: const EdgeInsets.only(
                                   top: 20,

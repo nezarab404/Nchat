@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/shared/constants.dart';
 import 'package:flutter_application_1/src/profile/cubit/profile_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,8 +28,7 @@ class ProfileScreen extends StatelessWidget {
                       radius: 80,
                       backgroundImage: ProfileCubit.get(context).pickedImage ==
                               null
-                          ? NetworkImage(
-                              ProfileCubit.get(context).user!.profileImage!)
+                          ? NetworkImage(userModel!.profileImage!)
                           : FileImage(ProfileCubit.get(context).pickedImage!)
                               as ImageProvider,
                     ),
@@ -48,20 +48,28 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  ProfileCubit.get(context).user!.name!,
+                  userModel!.name!,
                   style: Theme.of(context).textTheme.headline4,
                 ),
                 ListTile(
                   leading: const Icon(Icons.description),
                   title: const Text("Bio"),
-                  subtitle: Text(ProfileCubit.get(context).user!.bio!),
-                  tileColor: Color.fromARGB(8, 0, 0, 0),
+                  subtitle: Text(userModel!.bio!),
+                  tileColor: const Color.fromARGB(8, 0, 0, 0),
                 ),
+                const Divider(),
                 ListTile(
                   leading: const Icon(Icons.email),
                   title: const Text("Email"),
-                  subtitle: Text(ProfileCubit.get(context).user!.email!),
-                  tileColor: Color.fromARGB(8, 0, 0, 0),
+                  subtitle: Text(userModel!.email!),
+                  tileColor: const Color.fromARGB(8, 0, 0, 0),
+                ),
+                const Divider(),
+                ListTile(
+                  leading: const Icon(Icons.phone_android),
+                  title: const Text("Phone"),
+                  subtitle: Text(userModel!.phone!),
+                  tileColor: const Color.fromARGB(8, 0, 0, 0),
                 ),
               ],
             ),

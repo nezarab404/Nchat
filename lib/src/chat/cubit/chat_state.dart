@@ -9,4 +9,12 @@ class SendMessageSuccessState extends ChatStates {}
 
 class SendMessageErrorState extends ChatStates {}
 
+class SendImageMessageSuccessState extends ChatStates {}
+
+class SendImageMessageErrorState extends ChatStates {}
+
 class GetMessagesSuccessState extends ChatStates {}
+
+class ImagePickedSuccessState extends ChatStates {}
+
+class ImagePickedErrorState extends ChatStates {}

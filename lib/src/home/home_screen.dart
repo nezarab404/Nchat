@@ -14,90 +14,99 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            actions: [
-              TextButton(
-                  child: const Text(
-                    "logout",
-                    style: TextStyle(
-                      color: Colors.white,
+    return Builder(builder: (context) {
+      HomeCubit.get(context).getUser();
+      return BlocConsumer<HomeCubit, HomeStates>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              actions: [
+                TextButton(
+                    child: const Text(
+                      "logout",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  onPressed: () {
-                    uId = '';
+                    onPressed: () {
+                      uId = '';
 
-                    FirebaseAuth.instance.signOut().then((value) {
-                      SharedHelper.removeData(key: 'uId').then((value) {
-                        HomeCubit.get(context).usersList = [];
-                        HomeCubit.get(context).user = null;
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                      FirebaseAuth.instance.signOut().then((value) {
+                        SharedHelper.removeData(key: 'uId').then((value) {
+                          HomeCubit.get(context).usersList = [];
+                          HomeCubit.get(context).user = null;
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) => LoginScreen()));
+                        });
                       });
-                    });
-                  })
-            ],
-          ),
-          drawer: Drawer(
-            child: Column(
-              children: [
-                // UserAccountsDrawerHeader(
-                //   accountName: Text(HomeCubit.get(context).user!.name!),
-                //   accountEmail: Text(HomeCubit.get(context).user!.email!),
-                //   currentAccountPicture:
-                //       Image.network(HomeCubit.get(context).user!.profileImage!),
-                //   currentAccountPictureSize: const Size.square(100),
-                //   onDetailsPressed: () {
-                //     Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (_) => const ProfileScreen()));
-                //   },
-                // ),
+                    })
               ],
             ),
-          ),
-          body: Container(
-            alignment: Alignment.center,
-            child: state is HomeGetUserLoadingState
-                ? const CircularProgressIndicator()
-                : Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return buildUserItem();
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 50),
-                          child: Divider(
-                            height: 25,
-                          ),
-                        );
-                      },
-                      itemCount: 10,
-                    ),
+            drawer: Drawer(
+              child: Column(
+                children: [
+                  UserAccountsDrawerHeader(
+                    accountName: Text(HomeCubit.get(context).user == null
+                        ? ""
+                        : HomeCubit.get(context).user!.name!),
+                    accountEmail: Text(HomeCubit.get(context).user == null
+                        ? ""
+                        : HomeCubit.get(context).user!.email!),
+                    currentAccountPicture: Image.network(
+                        HomeCubit.get(context).user == null
+                            ? ""
+                            : HomeCubit.get(context).user!.profileImage!),
+                    currentAccountPictureSize: const Size.square(100),
+                    onDetailsPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const ProfileScreen()));
+                    },
                   ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.person_add),
-            onPressed: () {
-              HomeCubit.get(context).getAllUsers();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const AddFriendScreen(),
-                  ));
-            },
-          ),
-        );
-      },
-    );
+                ],
+              ),
+            ),
+            body: Container(
+              alignment: Alignment.center,
+              child: state is HomeGetUserLoadingState
+                  ? const CircularProgressIndicator()
+                  : Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return buildUserItem();
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 50),
+                            child: Divider(
+                              height: 25,
+                            ),
+                          );
+                        },
+                        itemCount: 10,
+                      ),
+                    ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              child: const Icon(Icons.person_add),
+              onPressed: () {
+                HomeCubit.get(context).getAllUsers();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AddFriendScreen(),
+                    ));
+              },
+            ),
+          );
+        },
+      );
+    });
   }
 
   Widget buildUserItem() => InkWell(

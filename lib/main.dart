@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
               ..getUser()
               ),
         BlocProvider<ProfileCubit>(
-            create: (context) => ProfileCubit()..getUser()),
+            create: (context) => ProfileCubit()),
             BlocProvider<ChatCubit>(create:(_)=>ChatCubit() )
       ],
       child: MaterialApp(

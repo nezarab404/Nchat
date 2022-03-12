@@ -12,14 +12,13 @@ class AddFriendScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(),
           body: state is HomeGetAllUsersLoadingState
               ? const Center(child: CircularProgressIndicator())
-              : HomeCubit.get(context).usersList.isEmpty
+              : HomeCubit.get(context).allUsersList.isEmpty
                   ? const Center(
                       child: Text("There is no Friends !!!"),
                     )
@@ -29,7 +28,7 @@ class AddFriendScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return buildUserItem(
                             context,
-                            HomeCubit.get(context).usersList[index],
+                            HomeCubit.get(context).allUsersList[index],
                           );
                         },
                         separatorBuilder: (context, index) {
@@ -37,7 +36,7 @@ class AddFriendScreen extends StatelessWidget {
                             height: 10,
                           );
                         },
-                        itemCount: HomeCubit.get(context).usersList.length,
+                        itemCount: HomeCubit.get(context).allUsersList.length,
                       ),
                     ),
         );

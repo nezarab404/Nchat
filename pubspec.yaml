@@ -38,13 +38,15 @@ dependencies:
   firebase_auth: ^3.3.9
   cloud_firestore: ^3.1.10
   firebase_storage: ^10.2.9
+  firebase_messaging: ^11.2.10
   image_picker: ^0.8.4+10
-  flutterfire_ui: ^0.3.5+1
   flutter_bloc: ^8.0.1
   bloc: ^8.0.3
   shared_preferences: ^2.0.13
   fluttertoast: ^8.0.9
-  webview_flutter_plus: ^0.3.0+2
+  # webview_flutter_plus: ^0.3.0+2
+  agora_rtc_engine: ^5.0.0
+  permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:

@@ -1,21 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutterfire_ui/auth.dart';
 
-class MyForm extends StatefulWidget {
-  const MyForm({Key? key}) : super(key: key);
+// class MyForm extends StatefulWidget {
+//   const MyForm({Key? key}) : super(key: key);
 
-  @override
-  _MyFormState createState() => _MyFormState();
-}
+//   @override
+//   _MyFormState createState() => _MyFormState();
+// }
 
-class _MyFormState extends State<MyForm> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const PhoneInputScreen(
+// class _MyFormState extends State<MyForm> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(),
+//       body: const PhoneInputScreen(
         
-      ),
-    );
-  }
-}
+//       ),
+//     );
+//   }
+// }

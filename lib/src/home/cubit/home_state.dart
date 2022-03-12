@@ -18,4 +18,18 @@ class HomeGetAllUsersLoadingState extends HomeStates {}
 
 class HomeGetAllUsersSuccessState extends HomeStates {}
 
-class HomeGetAllUsersErrorState extends HomeStates {}
+class HomeGetAllUsersErrorState extends HomeStates {
+  final String error;
+
+  HomeGetAllUsersErrorState(this.error);
+}
+
+class HomeGetMyChatsLoadingState extends HomeStates {}
+
+class HomeGetMyChatsSuccessState extends HomeStates {}
+
+class HomeGetMyChatsErrorState extends HomeStates {
+  final String error;
+
+  HomeGetMyChatsErrorState(this.error);
+}

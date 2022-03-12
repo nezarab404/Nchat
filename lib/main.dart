@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/user_model.dart';
 import 'package:flutter_application_1/shared/constants.dart';
 import 'package:flutter_application_1/shared/my_observer.dart';
 import 'package:flutter_application_1/shared/storage/shared_helper.dart';
+import 'package:flutter_application_1/src/call/cubit/call_cubit.dart';
 import 'package:flutter_application_1/src/chat/cubit/chat_cubit.dart';
 import 'package:flutter_application_1/src/home/home_screen.dart';
+import 'package:flutter_application_1/src/pickup/cubit/pickup_cubit.dart';
 import 'package:flutter_application_1/src/profile/cubit/profile_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +24,9 @@ void main() {
     await SharedHelper.init();
     Widget widget;
     uId = SharedHelper.getData(key: 'uId');
-
+    FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
+      userModel = UserModel.fromJson(value.data()!);
+    });
     if (uId != null) {
       widget = const HomeScreen();
     } else {
@@ -42,15 +48,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
-        BlocProvider<RegisterCubit>(create: (context) => RegisterCubit()),
-        BlocProvider<HomeCubit>(
-            create: (context) => HomeCubit()
-              ..getUser()
-              ),
-        BlocProvider<ProfileCubit>(
-            create: (context) => ProfileCubit()),
-            BlocProvider<ChatCubit>(create:(_)=>ChatCubit() )
+        BlocProvider<LoginCubit>(create: (_) => LoginCubit()),
+        BlocProvider<RegisterCubit>(create: (_) => RegisterCubit()),
+        BlocProvider<HomeCubit>(create: (_) => HomeCubit()..getUser()),
+        BlocProvider<ProfileCubit>(create: (_) => ProfileCubit()),
+        BlocProvider<ChatCubit>(create: (_) => ChatCubit()),
+        BlocProvider<CallCubit>(create: (_) => CallCubit()),
+        BlocProvider<PickupCubit>(create: (_) => PickupCubit()),
       ],
       child: MaterialApp(
         title: 'Chaty',

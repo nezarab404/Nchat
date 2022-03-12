@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/models/user_model.dart';
 import 'package:flutter_application_1/shared/constants.dart';
@@ -48,7 +48,29 @@ class ProfileCubit extends Cubit<ProfileStates> {
       pickedImage = File(image.path);
       emit(ProfileImagePickedSuccessState());
     }).catchError((error) {
-      emit(ProfileImagePickedErrorState());
+      emit(ProfileImagePickedErrorState(error.toString()));
+    });
+  }
+
+    void uploadImage() {
+    String imageName = pickedImage!.path.split('/').last;
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('users/$imageName')
+        .putFile(pickedImage!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(uId)
+            .update({'profileImage': value}).then((value) {
+          print("sssssssssssssssssssss");
+        });
+      });
+
+      emit(ProfileImageUploadedSccessState());
+    }).catchError((error) {
+      emit(ProfileImageUploadedErrorState(error.toString()));
     });
   }
 }

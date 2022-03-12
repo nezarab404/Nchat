@@ -19,8 +19,16 @@ class ProfileChangeBottomNavState extends ProfileStates {}
 
 class ProfileImagePickedSuccessState extends ProfileStates {}
 
-class ProfileImagePickedErrorState extends ProfileStates {}
+class ProfileImagePickedErrorState extends ProfileStates {
+  final String error;
+
+  ProfileImagePickedErrorState(this.error);
+}
 
 class ProfileImageUploadedSccessState extends ProfileStates {}
 
-class ProfileImageUploadedErrorState extends ProfileStates {}
+class ProfileImageUploadedErrorState extends ProfileStates {
+  final String error;
+
+  ProfileImageUploadedErrorState(this.error);
+}
